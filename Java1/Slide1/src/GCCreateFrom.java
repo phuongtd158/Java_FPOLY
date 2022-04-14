@@ -1,0 +1,1 @@
+abstract class Parent{private abstract void method();}

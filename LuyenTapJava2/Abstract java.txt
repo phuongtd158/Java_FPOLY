@@ -1,0 +1,8 @@
+* Trừu tượng
+- phương thức abstract -> class PHẢI là abstract
+- 1 class abstract chưa chắc đã có pthuc abstract
+- lớp con kế thừa thì phải ghi đè tất cả pthuc abstract của lớp cha
+- không tạo đc đối tượng từ lớp abstract
+- Lớp phải được khai báo abstract. Nếu một lớp chứa một phương thức abstract, thì lớp đó cũng phải là abstract.
+
+-Bất kỳ lớp con nào phải hoặc override phương thức abstract hoặc khai bao abstract chính nó.
