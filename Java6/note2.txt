@@ -1,0 +1,252 @@
+# JAVA6_SOF306
+
+### 1. Bài 1: STREAM API AND JACKSON API
+* **Lambda Expression**
+  * Kỹ thuật lập trình mới, đơn giản
+* **Stream API** (Tăng cường xử lý Collection)
+  * Stream (Giới thiệu từ Java8) bao bọc bên trong nó một tập hợp (collection) hoặc mảng (array)
+  * Stream cung cấp các phương thức tăng cường xử lý các phần tử bên trong nó với kỹ thuật lập trình Lambda
+  * Các operations thường dùng:
+    * **forEach()**: duyệt
+    * **filter()**: lọc
+    * **map(), mapToDouble(), mapToInt(), mapToLong()**: chuyển đổi
+    * **reduce()**: tích lũy
+    * **allMatch()/anyMatch()/noneMatch()**: kiểm tra
+* **JSON**
+  * JSON là chuẩn mô tả dữ liệu theo cú pháp đối tượng JavaScript nhằm lưu trữ và trao đổi giữa các ứng dụng
+* **Jackson API** (Chuyển đổi từ java -> json và ngược lại)
+  * **JsonNode**: Chứa dữ liệu json dùng JsonNode
+  * **Jackson with Map**: Chứa dữ liệu json dùng Map
+  * **Jackson with Plain Object**: Chứa dữ liệu json dùng Class
+
+
+### 2. Bài 2: BASIC THYMELEAF
+* **Spring Boot & JSP ViewResolver**
+* **Thymeleaf Introduction**
+  * **Thymeleaf** là một động cơ tạo mẫu (template engine) chạy phía server có khả năng xử lý việc tạo ra HTML, XML, CSS, JS và TEXT
+  * **Thymeleaf** dựa vào các nguyên mẫu (HTML, CSS,..) và bổ sung các quy luật cần thiết để sản sinh ra template hoàn thiện với dữ liệu động
+  * **Ưu điểm**:
+    * Đơn giản, dễ quản lý, bảo trì
+    * Thu hẹp khoảng cách giữa designer và developer
+* **Standard Expressions** 
+  * **${...}**: Variable expressions
+    * Scope and parameters
+  * ***{...}**: Selection expressions
+    * Thuộc tính của th:object
+  * **#{...}**: Message expressions
+    * I18n resource (.properties)
+  * **@{...}**: URL expressions
+    * URL/URI
+  * **~{...}**: Fragment expressions: được sử dụng để sao chép một file hoặc một fragment template được định nghĩa trước vào các vị trí mong muốn
+    * Layout (th:insert, th:replace)
+    * div th:insert="~{/menu.html}">.../div>
+      * Thay thế nội dung thẻ div bằng nội dung file **menu.html**
+    * div th:replace="~{/menu.html}">.../div>
+      * Thay thế thẻ div bằng nội dung file **menu.html**
+    * div th:insert="~{/fragment.html :: menu}">.../div>
+      * Thay thế nội dung thẻ div bằng fragment có tên là **menu** trong file **fragment.html**
+    * div th:replace="~{/fragment.html :: menu}">.../div>
+      * Thay thế thẻ div bằng fragment có tên là **menu** trong file **fragment.html**
+* **Thymeleaf Operators**
+  * String
+  * Arthmetic
+  * Logic
+  * Comparison
+  * Conditional
+  
+  
+* **Flow Control Attributes**
+  * **th:each**
+    * th:each="item: ${iterable}"
+    * th:each="item, state: ${iterable}"
+    * th:each="entry: ${map}"
+    * th:each="entry, state: ${map}"  
+  * **th:each**
+    * th:if="expr"
+    * th:unless="expr"
+  *  **th:switch**
+    * any th:switch="expr"
+      * any th:case="v1"
+      * any th:case="*"
+      
+      
+* **Thymeleaf Attributes** (Mức độ ưu tiên từ trên xuống, từ trái qua phải)
+  * **Bao hàm các fragment:** th:insert, th:replace
+  * **Vòng lặp:** th:each
+  * **Đánh giá điều khiển:** th:if, th:unless, th:switch, th:case
+  * **Định nghĩa biến cục bộ:** th:object, th:with
+  * **Hiệu chỉnh thuộc tính:** th:attr, th:attrprepend, th:attrappend
+  * **Hiệu chỉnh thuộc tính HTML:** th:value, th:href, th:src...
+  * **Thay đổi nội dung thẻ:** th:text, th:utext
+  * **Khai báo fragment:** th:fragment
+  * **Xóa fragment:** th:remove
+ 
+
+* **Thymeleaf Utilities**
+  * **Implicit Servlet Object**
+    * Thymeleaf định nghĩa sẵn các đối tượng Serlvet (#request, #response, #session, #servletContext, #locale), từ đó có thể gọi các phương thức để thực hiện công việc mong muốn
+      * ${#request.getRequestURI()}
+      * ${#session.getId()}
+      * ${#servletContext.getContextPath()}
+      * ${#locale.getLanguage()}
+    * Thymeleaf cho phép áp dụng quy ước JavaBean đối với các getter
+      * ${#request.requestURI}
+      * ${#session.id}
+      * ${#servletContext.contextPath}
+      * ${#locale.language}
+  * **Implicit Utity Objects**
+    * Thymeleaf cung cấp các đối tượng ngầm định chứa các phương thức tiện ích hỗ trợ xử lý trong Template
+      * **#messages**: xử lý tài nguyên đa ngôn ngữ
+        * Ex: ${#messages.msg('key', param1, param2)}
+      * **#dates**: xử lý thời gian
+        * Ex: ${#dates.format(date, parttern)}
+      * **#numbers**: xử lý số
+        * Ex: ${#numbers.formatDecimal(marks, 0, 'WHITESPACE', 2, 'POINT')}
+      * **#strings**: xử lý chuỗi
+        * Ex: ${#strings.capitalizeWords(str)}
+      * **#arrays**: xử lý mảng
+        * Ex: ${#arrays.length(array)}
+      * **#lists**: xử lý danh sách
+        * Ex: ${#lists.size(list)}
+      * **#aggregates**: tổng hợp dữ liệu từ collection, arrays, map,...
+        * Ex: ${#aggregates.sum(array)}
+        
+        
+### 3. Bài 3: ADVANCED THYMELEAF
+* **Databinding and Validation**
+  * Validation Annotaion
+    * Số
+      * Min, Max, DecimalMin, DecimalMax
+      * Positive, PostiveOrZero, Negative, NegativeOrZero
+      * Digits
+    * Chuỗi
+      * Email, Pattern
+      * NotBlank
+    * Tập hợp
+      * NotEmpty, Size
+    * Thời gian
+      * Past, PastOrPresent, Future, FutureOrPresent
+    * Khác
+      * NotNull, AssertFalse, AssertTrue, Null
+* **Layout**
+  * :fragment, :inset, :replace, :remove
+* **Internationalization**
+  * .properties
+  * @Configuration
+  * #{key}
+  * @href="?lang=vi"
+
+### 4. Bài 4: BASIC RESTFUL API
+* **REST & REST API**
+  * **REST** (Representational State Transfer) là các quy ước biểu diễn dữ liệu chuyển đổi giữa các đối tượng
+  * **REST API** (Application Programmung Interface) (còn được gọi là Restfull API) là Web Service hoạt động theo các tiêu chuẩn:
+    * Operations: GET, POST, PUT, DELETE,...
+    * Transfer Data: JSON or XML/HTML
+  * REST API Exchange model
+    * Request:
+      * Method: GET, POST, PUT, DELETE
+      * URL: EntryPoit
+      * JsonData: JSON
+    * Response:
+      * JsonData: JSON
+    * AngularJS $HTTP Service API
+      * REST API Operatuins
+        * $http.get(url).then(response =>{}).catch(error=>{})
+        * $http.post(url, data).then(response =>{}).catch(error=>{})
+        * $http.put(url, data).then(response =>{}).catch(error=>{})
+        * $http.delete(url).then(response =>{}).catch(error=>{})
+    * Jackson API
+      * ObjectMapper
+        * readValue(): Đọc giữ liệu JSON
+        * readTree(): Đọc giữ liệu JSON
+        * writeValue(): Chuyển đổi đối tượng -> JSON
+        * writeValueAsString(): Chuyển đổi đối tượng -> JSON
+        * createObjectNode(): Tạo ra Node và đổ dữ liệu vào Node để gửi đi
+      * JsonNode
+        * get(): lấy ra Node
+        * findValue(): tìm Node
+        * asType(): lấy giá trị
+        * iterator(): đọc mảng
+      * ObjectNode
+        * put()
+        * putObject()
+        * putArray()
+    * RestTemplate API
+      * RestTemplate: Thực hiện các REST Operations
+        * getForObject(url, responseType<T>):T
+        * delete(url)
+        * postForObject(url, httpEntity, responseType<T>):T
+      * HttpEntity<T>: Đóng gói dữ liệu JSON gửi đến REST API
+        * new HttpEntity<>(T)
+ 
+ ### 5. Bài 5: ADVANCED RESTFUL API
+ * **Spring Boot REST API**
+ * **REST API with JpaRepository**
+ * **Import data Excel using REST API**
+   * FileReader & ExcelJS
+     * Mục tiêu: Đọc dữ liệu từ file excel, mỗi row chuyển đổi thành một đối tượng JSON và gửi lên Server để lưu vào CSDL
+     * API và thư viện cần thiết
+       * FileReader API: đọc file từ trường file
+       * Thư viện ExcelJS: Xử lý dữ liệu excel của file
+     * Các thành phần trong ExcelJS
+       * **Workbook**: gồm tất cả các sheet trong file excel
+       * **Worksheet**: gồm nhiều hàng (row)
+       * **Row**: gồm nhiều ô (cell) theo chiều ngang
+       * **Column**: gồm nhiều ô (cell) theo chiều dọc
+       * **Cell**: chứa dữ liệu
+ * **Upload/Download File REST API**
+ * **@CrossOgirin**
+   * Mặc định chỉ có các Rest Consumer cùng domain được cho phép consume các REST API (khác domain sẽ không được phép)
+   * **@CrossOgirin()** được sử dụng để khai báo cho phép các nguồn địa chỉ Rest Consumer đáng tin cậy
+
+-----------------SECURITY-------------------
+-Secured URL là các URL được bảo vệ
+-Nguồn dữ liệu User được lưu ở inMemoryAuthentication()
+-Login UI http.httpBassic();
+
+HttpSecurity phân quyền đăng nhập
+AuthenticationMangerBuiler nguồn dữ liệu người dùng
+
+---Login form---
+-http.formLogin()
+		.loginPage() //Form đăng nhập
+		.loginProcessingUrl() //Ấn login
+		.defaultSuccessUrl(url , boolean) -> true: luôn trở về url được fix cứng
+						     false: trả về url mà người dùng yêu cầu trước đó
+		.failureUrl(url) -> Trả về 1 form khi người dùng ấn canel hoặc sai password
+		.usernameParameter(param) -> username
+		.passwordParameter(param) -> password
+
+-http.rememberMe()
+		.rememberMeParameter() ->remember
+
+-http.logout()
+	     .logoutUrl(url) //đường dẫn logout
+	     .logoutSuccessUrl(url) //dường dẫn khi logout thành công
+	     .addLogoutHandler(new SecurityContextLoggerHandler());
+
+---HtppSecurity - Authorizing---
+
+
+${#request.remoteUser} //Check đăng nhập chưa
+${#request.isUserInRole(role)} //Kiêm tra Role
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org'>
+<body>
+	<ul>
+		<li th:text="s{#authentication.name)"></li>
+		<li th:text="s{#authentication.authorities)"></li>
+	</uls
+	<ul th:if="${#authentication.authenticated)">
+		<li th:if="${#request.isUserinRole ('ADMIN')}'>Admin</li>
+		<li th:if="${#request.isUserlnRole("'ADMIN')} OR ${#request.isUserln Role('USER)}">
+			Admin or User
+	<	/li>
+		<li th:if="S{#request.isUserinRole('GUEST)}'>Guest/li>
+	</ul>
+</body>
+</htmls
+
+
+

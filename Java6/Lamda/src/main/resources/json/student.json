@@ -1,0 +1,13 @@
+{
+  "name": "Nguyen Minh Phuong",
+  "marks": 10,
+  "gender": 0,
+  "contact": {
+    "email": "phuongnm@gmail.com",
+    "phone": "123"
+  },
+  "subjects": [
+    "VIE1012",
+    "VIE1013"
+  ]
+}

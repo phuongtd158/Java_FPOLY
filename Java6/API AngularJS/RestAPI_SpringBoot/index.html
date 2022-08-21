@@ -1,0 +1,72 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.3/angular.min.js"
+        integrity="sha512-KZmyTq3PLx9EZl0RHShHQuXtrvdJ+m35tuOiwlcZfs/rE7NZv29ygNA8SFCkMXTnYZQK2OX0Gm2qKGfvWEtRXA==" crossorigin="anonymous"
+        referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.3.0/exceljs.min.js"
+        integrity="sha512-UnrKxsCMN9hFk7M56t4I4ckB4N/2HHi0w/7+B/1JsXIX3DmyBcsGpT3/BsuZMZf+6mAr0vP81syWtfynHJ69JA==" crossorigin="anonymous"
+        referrerpolicy="no-referrer"></script>
+    <script src="./script.js"></script>
+</head>
+
+<body ng-app="myApp" ng-controller="myController">
+
+    <form>
+        <input type="text" placeholder="Email" ng-model="student.email"> <br>
+        <input type="text" placeholder="Fullname" ng-model="student.fullname"> <br>
+        <input type="text" placeholder="Marks" ng-model="student.marks"> <br>
+        <input type="radio" ng-model="student.gender" ng-checked="student.gender == 1" ng-value="1"> Male
+        <input type="radio" ng-model="student.gender" ng-checked="student.gender != 1" ng-value="0"> Female
+        <br>
+        <select ng-model="student.country">
+            <option value="VN" selected="selected">Vietnam</option>
+            <option value="US">United States</option>
+        </select> <br> <br>
+        <button ng-click="create()">Create</button>
+        <button ng-click="update()">Update</button>
+        <button ng-click="delete(key)">Delete</button>
+        <button ng-click="reset()">Reset</button>
+        <input type="file" onchange="angular.element(this).scope().import(this.files)">
+    </form>
+    <hr>
+    <table border="1" style="width: 50%;">
+        <thead>
+            <th>Email</th>
+            <th>Full Name</th>
+            <th>Marks</th>
+            <th>Gender</th>
+            <th>Country</th>
+            <th>Action</th>
+        </thead>
+        <tbody>
+            <tr ng-repeat="student in students">
+                <td>{{student.email}}</td>
+                <td>{{student.fullname}}</td>
+                <td>{{student.marks}}</td>
+                <td>{{student.gender == 1 ? 'Male' : 'Female'}}</td>
+                <td>{{student.country}}</td>
+                <td>
+                    <button ng-click="edit(student.id)">Edit</button>
+                    <button ng-click="delete(student.id)">Delete</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h3>Upload file</h3>
+    <label>
+        Upload file:
+        <input type="file" accept="image/*" multiple="multiple" onchange="angular.element(this).scope().uploadImage(this.files)">
+    </label>
+    <hr>
+    <label ng-repeat="filename in filenames" title="Double click to delete">
+        <img ng-src="{{url(filename)}}" ng-dblclick="deleteImage(filename)">
+    </label>
+</body>
+
+</html>

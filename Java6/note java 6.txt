@@ -1,0 +1,91 @@
+-Stream<T>.forEach(item -> {...}) duyệt phần tử trong steam
+
+-Stream<T>.filter(b - > boolean) lấy phần tử thỏa mãn điều kiện nào đó
+
+-Stream<T>.collect(Collector) thực hiện việc thu thập kết quả trong Stream (Là phương thức kết thúc)
+
+-Stream<T>.map(T -> R) sử dụng để chuyển đổi một phần tử đầu vào (T) thành dầu ra (R) (Là phương thức trung gian)
+
+-Stream<T>.reduce(initial, (temp, item) -> newTemp) tính giá trị tích lũy từ các phần tử trong Stream
+Example: double incomeTax = listStaffs.stream()
+                .map(staff -> staff.getSalary())
+                .reduce(0.0, (subTotal, salary) -> subTotal + salary * 0.1);
+
+-sum(), count(), min(), max(), average() điều được thực hiện trên số nên cần chuyển đổi sang <Number>Stream
+Example: Stream<T>.mapToDouble(): DoubleStream
+
+-Thymeleaf namespace
+<html xmlns:th = "http://www.thymeleaf.org">
+-th:text
+<span th:text="${message}"></span>
+<span>[[${message}]]</span>
+-th:utext(unescape text)
+<span th:utext="${message}"></span>
+<span>[(${message})]</span>
+	
+-Thymeleaf standard expressions
+${}: Variable expressions (Scope and parameters)
+*{}: Selection expressions (th:object)
+#{}: Message expressions
+@{}: URL expressions(URL/URI)
+~{}: Flagment expressions(Layout: th:insert, th:replace)
+ Example:
+		<img th:src="@{/image/2.PNG}" alt="" style="width: 200px" />
+		<nav th:replace="~{/layout/menu.html}"></nav>
+		<h1 th:text=${message}></h1>
+	
+		<ul th:object="${student}">
+			<li th:text="*{name}"></li>
+			<li th:text="*{marks}"></li>
+			<li th:text="*{gender == 1 ? 'Nam' : 'Nữ'}"></li>
+			<li th:text="*{contact.phone}"></li>
+			<li th:text="*{subjects}"></li>
+		</ul>
+-Operator
+		<ul>
+			<li th:text="${x + y}"></li>
+			<li th:text="${x % y}"></li>
+			<li th:text="not ${x > y}"></li>
+			<li th:text="${x gt y} and ${x == y}"></li>
+			<li th:text="${x > y} ? 'OK' : 'Cancel'"></li>
+			<li th:text="@{|a/b/${x}/${y}|}"></li>
+		</ul>
+		
+		<ul>
+th:each		<li th:each="student, state: ${listStudents}"><a
+			th:href="@{|/student/list?index=${state.index}|}">[[${student.name}]]</a>
+		</li>
+	
+	<ul th:object="${student}">
+		<li><i>Name:</i>[[*{name}]]</li>
+		<li><i>Marks:</i>[[*{marks}]]</li>
+		<li><i>Gender:</i>[[*{gender == 1 ? 'Male' : 'Female'}]]</li>
+		<li><i>Contact:</i>[[*{contact.email}]]</li>
+		<li >
+			<i>Subjects:</i>
+			<ul th:each="subject: *{subjects}">
+				<li>[[${subject}]]</li>
+			</ul>
+		</li>
+		<li th:switch="*{#arrays.length(subjects)}">
+			<i>Time: </i>
+			<b th:case="1">Mới vào</b>
+			<b th:case="2">Đang học</b>
+			<b th:case="*">Sắp ra trường</b>
+		</li>
+		<li th:if="*{marks > 9}">
+			<i>Title: </i>
+			<b>Golden Bee</b>
+		</li>
+	</ul>
+		
+-Switch
+	th:case="*": Default
+-#date: xử lý thời gian
+${#dates.format(date, parttern)}
+${#dates.format("2022/01/01", "dd/MM/yyyy")}
+
+th:replace: Thay toàn bộ thẻ th:replace
+th:insert: Bỏ nội dung vào giữa thẻ th:insert
+th:remove: Xóa nội dung thẻ khỏi trang web
+
